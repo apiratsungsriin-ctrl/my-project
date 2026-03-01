@@ -108,3 +108,77 @@
 </script>
 </body>
 </html>
+    </div>
+</div>
+
+<div id="experience" class="page">
+    <div class="header-banner"><h2>🌟 Experience</h2><p>แชร์เทคนิคจากมือโปร</p></div>
+    <div class="container text-center"><p class="text-muted">ส่วนนี้รอข้อมูลจากการแชร์...</p></div>
+</div>
+
+<div id="jobs" class="page">
+    <div class="header-banner">
+        <h2>💼 Job Board</h2>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXTVXlbeamMIlFuidcG5d86Go40vXZu4fZX9QbbQmJBTmApw/viewform" target="_blank" class="btn btn-light btn-sm fw-bold mt-2">➕ ลงประกาศงาน</a>
+    </div>
+    <div class="container">
+        <div id="list-jobs" class="row">
+            <div class="text-center"><div class="spinner-border text-primary"></div></div>
+        </div>
+    </div>
+</div>
+
+<nav class="bottom-nav border-top">
+    <a href="javascript:void(0)" class="nav-item active" onclick="showPage('community', this)"><i class="bi bi-chat-dots"></i>สังคม</a>
+    <a href="javascript:void(0)" class="nav-item" onclick="showPage('ranking', this)"><i class="bi bi-trophy"></i>อันดับ</a>
+    <a href="javascript:void(0)" class="nav-item" onclick="showPage('experience', this)"><i class="bi bi-lightbulb"></i>ประสบการณ์</a>
+    <a href="javascript:void(0)" class="nav-item" onclick="showPage('jobs', this)"><i class="bi bi-briefcase"></i>จ้างงาน</a>
+</nav>
+
+<script>
+    const sheetId = '1xnYqk5zr4WInc2BKMfMhbTYd9GTEcgrjsAsMJeh30jg';
+
+    function showPage(pageId, element) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(pageId).classList.add('active-page');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        element.classList.add('active');
+        if(pageId === 'jobs') loadJobs();
+    }
+
+    function loadJobs() {
+        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+        fetch(url).then(res => res.text()).then(data => {
+            const jsonData = JSON.parse(data.substring(47).slice(0, -2));
+            const rows = jsonData.table.rows;
+            let html = '';
+            rows.forEach(row => {
+                const title = row.c[3]?.v || 'ไม่มีชื่อตำแหน่ง';
+                const detail = row.c[4]?.v || '-';
+                const price = row.c[5]?.v || 'ตกลงกันได้';
+                const contact = row.c[6]?.v || 'ไม่ระบุ';
+                const img = row.c[7]?.v || 'https://via.placeholder.com/400x200?text=Coding+Job';
+                
+                html += `
+                <div class="col-12">
+                    <div class="card card-custom p-0 text-start">
+                        <img src="${img}" style="width:100%; height:150px; object-fit:cover;">
+                        <div class="p-3">
+                            <h6 class="fw-bold mb-1 text-primary">${title}</h6>
+                            <p class="small text-muted mb-2">${detail}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-success">${price}</span>
+                                <small class="text-primary">${contact}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            document.getElementById('list-jobs').innerHTML = html;
+        });
+    }
+    // โหลดข้อมูลงานเริ่มต้น
+    loadJobs();
+</script>
+</body>
+</html>
