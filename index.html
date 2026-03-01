@@ -1,345 +1,171 @@
-).classList.add('active-page');
-        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-        element.classList.add('active');
-        
-        if(pageId === 'community') loadCommunity();
-        if(pageId === 'jobs') loadJobs();
-    }
-
-    // 3. โหลดข้อมูล Community (ระบบที่ 1)
-    function loadCommunity() {
-        const url = `https://docs.google.com/spreadsheets/d/${sheetId_Community}/gviz/tq?tqx=out:json&gid=0`;
-        fetch(url).then(res => res.text()).then(data => {
-            const jsonData = JSON.parse(data.substring(47).slice(0, -2));
-            const rows = jsonData.table.rows;
-            let html = '';
-            rows.forEach(row => {
-                const name = row.c[1]?.v || 'Anonymous';
-                const tag = row.c[2]?.v || 'ทั่วไป';
-                const msg = row.c[3]?.v || '';
-                const link = row.c[4]?.v || '#';
-                html += `
-                <div class="card card-custom p-3">
-                    <div class="d-flex align-items-center mb-2">
-                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width:35px; height:35px;">${name.charAt(0)}</div>
-                        <div class="ms-2">
-                            <div class="fw-bold" style="font-size:14px;">${name}</div>
-                            <span class="badge bg-light text-primary border" style="font-size:10px;">${tag}</span>
-                        </div>
-                    </div>
-                    <p style="font-size:14px; color:#333;">${msg}</p>
-                    <div class="text-end"><a href="${link}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">ติดต่อ</a></div>
-                </div>`;
-            });
-            document.getElementById('list-community').innerHTML = html || 'ไม่มีข้อมูล';
-        });
-    }
-
-    // 4. โหลดข้อมูล Jobs (ระบบที่ 4)
-    function loadJobs() {
-        const url = `https://docs.google.com/spreadsheets/d/${sheetId_Jobs}/gviz/tq?tqx=out:json&gid=0`;
-        fetch(url).then(res => res.text()).then(data => {
-            const jsonData = JSON.parse(data.substring(47).slice(0, -2));
-            const rows = jsonData.table.rows;
-            let html = '';
-            rows.forEach(row => {
-                const title = row.c[3]?.v || '-'; // ดึงคอลัมน์ D (Title)
-                const desc = row.c[4]?.v || '-';  // ดึงคอลัมน์ E (Detail)
-                const price = row.c[5]?.v || '-'; // ดึงคอลัมน์ F (Price)
-                html += `
-                <div class="card card-custom p-3">
-                    <h6 class="fw-bold text-primary">${title}</h6>
-                    <p class="small text-muted mb-2">${desc}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="badge bg-success">฿ ${price}</span>
-                        <button class="btn btn-sm btn-primary rounded-pill">รับงาน</button>
-                    </div>
-                </div>`;
-            });
-            document.getElementById('list-jobs').innerHTML = html || 'ไม่มีข้อมูล';
-        });
-    }
-
-    // เริ่มต้นให้โหลดหน้า Community ทันที
-    loadCommunity();
-</script>
-</body>
-</html>
-    </div>
-</div>
-
-<div id="experience" class="page">
-    <div class="header-banner"><h2>🌟 Experience</h2><p>แชร์เทคนิคจากมือโปร</p></div>
-    <div class="container text-center"><p class="text-muted">ส่วนนี้รอข้อมูลจากการแชร์...</p></div>
-</div>
-
-<div id="jobs" class="page">
-    <div class="header-banner">
-        <h2>💼 Job Board</h2>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXTVXlbeamMIlFuidcG5d86Go40vXZu4fZX9QbbQmJBTmApw/viewform" target="_blank" class="btn btn-light btn-sm fw-bold mt-2">➕ ลงประกาศงาน</a>
-    </div>
-    <div class="container">
-        <div id="list-jobs" class="row">
-            <div class="text-center"><div class="spinner-border text-primary"></div></div>
-        </div>
-    </div>
-</div>
-
-<nav class="bottom-nav border-top">
-    <a href="javascript:void(0)" class="nav-item active" onclick="showPage('community', this)"><i class="bi bi-chat-dots"></i>สังคม</a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showPage('ranking', this)"><i class="bi bi-trophy"></i>อันดับ</a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showPage('experience', this)"><i class="bi bi-lightbulb"></i>ประสบการณ์</a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showPage('jobs', this)"><i class="bi bi-briefcase"></i>จ้างงาน</a>
-</nav>
-
-<script>
-    const sheetId = '1xnYqk5zr4WInc2BKMfMhbTYd9GTEcgrjsAsMJeh30jg';
-
-    function showPage(pageId, element) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById(pageId).classList.add('active-page');
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        element.classList.add('active');
-        if(pageId === 'jobs') loadJobs();
-    }
-
-    function loadJobs() {
-        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
-        fetch(url).then(res => res.text()).then(data => {
-            const jsonData = JSON.parse(data.substring(47).slice(0, -2));
-            const rows = jsonData.table.rows;
-            let html = '';
-            rows.forEach(row => {
-                const title = row.c[3]?.v || 'ไม่มีชื่อตำแหน่ง';
-                const detail = row.c[4]?.v || '-';
-                const price = row.c[5]?.v || 'ตกลงกันได้';
-                const contact = row.c[6]?.v || 'ไม่ระบุ';
-                const img = row.c[7]?.v || 'https://via.placeholder.com/400x200?text=Coding+Job';
-                
-                html += `
-                <div class="col-12">
-                    <div class="card card-custom p-0 text-start">
-                        <img src="${img}" style="width:100%; height:150px; object-fit:cover;">
-                        <div class="p-3">
-                            <h6 class="fw-bold mb-1 text-primary">${title}</h6>
-                            <p class="small text-muted mb-2">${detail}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="badge bg-success">${price}</span>
-                                <small class="text-primary">${contact}</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-            });
-            document.getElementById('list-jobs').innerHTML = html;
-        });
-    }
-    // โหลดข้อมูลงานเริ่มต้น
-    loadJobs();
-</script>
-</body>
-</html>
-    </div>
-</div>
-
-<div id="experience" class="page">
-    <div class="header-banner"><h2>🌟 Experience</h2><p>แชร์เทคนิคจากมือโปร</p></div>
-    <div class="container text-center"><p class="text-muted">ส่วนนี้รอข้อมูลจากการแชร์...</p></div>
-</div>
-
-<div id="jobs" class="page">
-    <div class="header-banner">
-        <h2>💼 Job Board</h2>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXTVXlbeamMIlFuidcG5d86Go40vXZu4fZX9QbbQmJBTmApw/viewform" target="_blank" class="btn btn-light btn-sm fw-bold mt-2">➕ ลงประกาศงาน</a>
-    </div>
-    <div class="container">
-        <div id="list-jobs" class="row">
-            <div class="text-center"><div class="spinner-border text-primary"></div></div>
-        </div>
-    </div>
-</div>
-
-<nav class="bottom-nav border-top">
-    <a href="javascript:void(0)" class="nav-item active" onclick="showPage('community', this)"><i class="bi bi-chat-dots"></i>สังคม</a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showPage('ranking', this)"><i class="bi bi-trophy"></i>อันดับ</a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showPage('experience', this)"><i class="bi bi-lightbulb"></i>ประสบการณ์</a>
-    <a href="javascript:void(0)" class="nav-item" onclick="showPage('jobs', this)"><i class="bi bi-briefcase"></i>จ้างงาน</a>
-</nav>
-
-<script>
-    const sheetId = '1xnYqk5zr4WInc2BKMfMhbTYd9GTEcgrjsAsMJeh30jg';
-
-    function showPage(pageId, element) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById(pageId).classList.add('active-page');
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        element.classList.add('active');
-        if(pageId === 'jobs') loadJobs();
-    }
-
-    function loadJobs() {
-        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
-        fetch(url).then(res => res.text()).then(data => {
-            const jsonData = JSON.parse(data.substring(47).slice(0, -2));
-            const rows = jsonData.table.rows;
-            let html = '';
-            rows.forEach(row => {
-                const title = row.c[3]?.v || 'ไม่มีชื่อตำแหน่ง';
-                const detail = row.c[4]?.v || '-';
-                const price = row.c[5]?.v || 'ตกลงกันได้';
-                const contact = row.c[6]?.v || 'ไม่ระบุ';
-                const img = row.c[7]?.v || 'https://via.placeholder.com/400x200?text=Coding+Job';
-                
-                html += `
-                <div class="col-12">
-                    <div class="card card-custom p-0 text-start">
-                        <img src="${img}" style="width:100%; height:150px; object-fit:cover;">
-                        <div class="p-3">
-                            <h6 class="fw-bold mb-1 text-primary">${title}</h6>
-                            <p class="small text-muted mb-2">${detail}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="badge bg-success">${price}</span>
-                                <small class="text-primary">${contact}</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-            });
-            document.getElementById('list-jobs').innerHTML = html;
-        });
-    }
-    // โหลดข้อมูลงานเริ่มต้น
-    loadJobs();
-</script>
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevHub - Fixed Icons</title>
+    <title>DevHub Project</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #f0f2f5; font-family: 'Kanit', sans-serif; padding-bottom: 80px; }
+        body { background-color: #f4f7f6; font-family: 'Kanit', sans-serif; padding-bottom: 80px; }
         .page { display: none; }
         .active-page { display: block; }
-        .header-box { background: linear-gradient(135deg, #0d6efd, #0056b3); color: white; padding: 25px 15px; border-radius: 0 0 25px 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 1000; }
+        .header-box { background: linear-gradient(135deg, #0d6efd, #00429d); color: white; padding: 30px 15px; border-radius: 0 0 25px 25px; margin-bottom: 20px; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 1000; }
         .nav-link { text-align: center; color: #888; text-decoration: none; font-size: 11px; flex: 1; border: none; background: none; }
         .nav-link.active { color: #0d6efd; font-weight: bold; }
-        .nav-link i { font-size: 24px; display: block; margin-bottom: 2px; } /* ขยายไอคอนให้ชัด */
-        .card-custom { border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin-bottom: 15px; background: white; }
+        .nav-link i { font-size: 24px; display: block; }
+        .card-custom { border: none; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; background: white; overflow: hidden; }
     </style>
 </head>
 <body>
 
 <div id="community" class="page active-page">
-    <div class="header-box text-center"><h4>👥 สังคมเดฟ</h4></div>
+    <div class="header-box text-center">
+        <h4 class="fw-bold"><i class="bi bi-people-fill me-2"></i> Dev Community</h4>
+        <p class="small mb-0 opacity-75">พื้นที่แบ่งปันและหาเพื่อนร่วมอุดมการณ์</p>
+    </div>
     <div class="container mb-3 text-center">
-        <button class="btn btn-white w-100 shadow-sm rounded-pill border py-2" data-bs-toggle="modal" data-bs-target="#modal1">
-            <i class="bi bi-pencil-square text-primary"></i> เขียนโพสต์ใหม่
+        <button class="btn btn-white w-100 shadow-sm rounded-pill border py-2" data-bs-toggle="modal" data-bs-target="#postModal">
+            <i class="bi bi-pencil-square text-primary me-1"></i> คุณกำลังคิดอะไรอยู่?
         </button>
     </div>
     <div id="list-community" class="container"></div>
 </div>
 
 <div id="ranking" class="page">
-    <div class="header-box text-center"><h4>🏆 อันดับสูงสุด</h4></div>
-    <div id="list-ranking" class="container">
-        <div class="card card-custom p-3 d-flex flex-row justify-content-between"><span>1. นายเทพ โค้ดดิ้ง</span><span class="text-warning fw-bold">2,500 แต้ม</span></div>
-        <div class="card card-custom p-3 d-flex flex-row justify-content-between"><span>2. สมหญิง สกิลดี</span><span class="text-warning fw-bold">1,850 แต้ม</span></div>
+    <div class="header-box text-center">
+        <h4 class="fw-bold"><i class="bi bi-trophy-fill me-2"></i> Ranking</h4>
+    </div>
+    <div class="container">
+        <div class="card card-custom p-3 d-flex flex-row justify-content-between align-items-center">
+            <span>1. นายเทพ โค้ดดิ้ง</span><span class="text-primary fw-bold">2,500 แต้ม</span>
+        </div>
+        <div class="card card-custom p-3 d-flex flex-row justify-content-between align-items-center">
+            <span>2. สมหญิง สกิลดี</span><span class="text-primary fw-bold">1,850 แต้ม</span>
+        </div>
     </div>
 </div>
 
 <div id="experience" class="page">
-    <div class="header-box text-center"><h4>💡 ประสบการณ์</h4></div>
+    <div class="header-box text-center">
+        <h4 class="fw-bold"><i class="bi bi-lightbulb-fill me-2"></i> Experience</h4>
+    </div>
     <div class="container mb-3 text-center">
-        <button class="btn btn-warning text-white w-100 shadow-sm rounded-pill border py-2" data-bs-toggle="modal" data-bs-target="#modal3">
-            <i class="bi bi-lightbulb-fill"></i> แชร์เทคนิคของคุณ
+        <button class="btn btn-warning text-white w-100 shadow-sm rounded-pill border py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#expModal">
+            <i class="bi bi-stars me-1"></i> แบ่งปันเทคนิคของคุณ
         </button>
     </div>
     <div id="list-experience" class="container"></div>
 </div>
 
 <div id="jobs" class="page">
-    <div class="header-box text-center"><h4>💼 งานด่วน</h4></div>
+    <div class="header-box text-center">
+        <h4 class="fw-bold"><i class="bi bi-briefcase-fill me-2"></i> Job Board</h4>
+    </div>
     <div id="list-jobs" class="container"></div>
 </div>
 
 <nav class="bottom-nav">
-    <button class="nav-link active" onclick="showPage('community', this)"><i class="bi bi-chat-left-dots-fill"></i>สังคม</button>
+    <button class="nav-link active" onclick="showPage('community', this)"><i class="bi bi-chat-fill"></i>สังคม</button>
     <button class="nav-link" onclick="showPage('ranking', this)"><i class="bi bi-trophy-fill"></i>อันดับ</button>
     <button class="nav-link" onclick="showPage('experience', this)"><i class="bi bi-lightbulb-fill"></i>ประสบการณ์</button>
     <button class="nav-link" onclick="showPage('jobs', this)"><i class="bi bi-briefcase-fill"></i>จ้างงาน</button>
 </nav>
 
-<div class="modal fade" id="modal1" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content" style="border-radius:20px;"><div class="modal-body p-0"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGfD3kDVJaCqZmvnTt6jpJMKY2xJrJU2WBuIOIt8WeiGPGww/viewform?embedded=true" width="100%" height="500" frameborder="0"></iframe></div></div></div></div>
-<div class="modal fade" id="modal3" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content" style="border-radius:20px;"><div class="modal-body p-0"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdIFyA_JmeF20s3VX_qGIW6S1-g9RWHk_BLWCjfENwTeUzIeQ/viewform?embedded=true" width="100%" height="500" frameborder="0"></iframe></div></div></div></div>
+<div class="modal fade" id="postModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content" style="border-radius:20px;"><div class="modal-body p-0">
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGfD3kDVJaCqZmvnTt6jpJMKY2xJrJU2WBuIOIt8WeiGPGww/viewform?embedded=true" width="100%" height="550" frameborder="0"></iframe>
+</div></div></div></div>
+
+<div class="modal fade" id="expModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content" style="border-radius:20px;"><div class="modal-body p-0">
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdIFyA_JmeF20s3VX_qGIW6S1-g9RWHk_BLWCjfENwTeUzIeQ/viewform?embedded=true" width="100%" height="550" frameborder="0"></iframe>
+</div></div></div></div>
 
 <script>
-    // IDs จากที่คุณส่งมา
-    const ID_1 = '15ajcag5w0OlLohaLHt7nY3NT3mkR_jDuc8hV3UKFeVY'; 
-    const ID_3 = '1ocXnPIi2fvjYxkO-GOVBZpm-RBg122_ywP_IJcv3Bi8'; 
-    const ID_4 = '1xnYqk5zr4WInc2BKMfMhbTYd9GTEcgrjsAsMJeh30jg'; 
+    // ID ไฟล์ที่ดึงมาจากลิ้งก์ของคุณ
+    const SHEET_1 = '15ajcag5w0OlLohaLHt7nY3NT3mkR_jDuc8hV3UKFeVY'; // สังคม
+    const SHEET_3 = '1ocXnPIi2fvjYxkO-GOVBZpm-RBg122_ywP_IJcv3Bi8'; // ประสบการณ์
+    const SHEET_4 = '1xnYqk5zr4WInc2BKMfMhbTYd9GTEcgrjsAsMJeh30jg'; // จ้างงาน
 
-    function showPage(p, el) {
-        document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
-        document.getElementById(p).classList.add('active-page');
-        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-        el.classList.add('active');
-        if(p === 'community') loadComm();
-        if(p === 'experience') loadExp();
-        if(p === 'jobs') loadJobs();
+    function showPage(pageId, element) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(pageId).classList.add('active-page');
+        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+        element.classList.add('active');
+        
+        if(pageId === 'community') loadCommunity();
+        if(pageId === 'experience') loadExperience();
+        if(pageId === 'jobs') loadJobs();
     }
 
-    async function pull(id, gid) {
+    async function fetchData(id, gid) {
         try {
-            const r = await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&gid=${gid}`);
-            const t = await r.text();
-            const data = JSON.parse(t.substring(47).slice(0, -2));
-            return data.table.rows;
-        } catch(e) { return []; }
+            const response = await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&gid=${gid}`);
+            const text = await response.text();
+            const json = JSON.parse(text.substring(47).slice(0, -2));
+            return json.table.rows;
+        } catch (e) {
+            console.error('Error fetching data:', e);
+            return [];
+        }
     }
 
-    async function loadComm() {
-        const rows = await pull(ID_1, '0');
-        document.getElementById('list-community').innerHTML = rows.map(r => `
+    async function loadCommunity() {
+        const rows = await fetchData(SHEET_1, '0');
+        let html = '';
+        rows.forEach(r => {
+            const name = r.c[2]?.v || 'Anonymous'; // คอลัมน์ C ในรูปชีต
+            const tag = r.c[3]?.v || 'ทั่วไป';      // คอลัมน์ D
+            const msg = r.c[4]?.v || '';           // คอลัมน์ E
+            const link = r.c[5]?.v || '#';          // คอลัมน์ F
+            html += `
             <div class="card card-custom p-3">
-                <div class="fw-bold text-primary"><i class="bi bi-person-fill"></i> ${r.c[2]?.v || 'Anon'}</div>
-                <div class="small text-muted mb-2">${r.c[3]?.v || ''}</div>
-                <p class="small mb-1">${r.c[4]?.v || ''}</p>
-            </div>`).join('');
+                <div class="d-flex align-items-center mb-2">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width:35px; height:35px; font-weight:bold;">${name.charAt(0)}</div>
+                    <div class="ms-2"><div class="fw-bold small">${name}</div><span class="badge bg-light text-primary border" style="font-size:10px;">${tag}</span></div>
+                </div>
+                <p class="small mb-2 text-dark">${msg}</p>
+                <div class="text-end"><a href="${link}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">ติดต่อ</a></div>
+            </div>`;
+        });
+        document.getElementById('list-community').innerHTML = html || '<p class="text-center mt-5">ไม่มีข้อมูล</p>';
     }
 
-    async function loadExp() {
-        const rows = await pull(ID_3, '0');
-        document.getElementById('list-experience').innerHTML = rows.map(r => `
+    async function loadExperience() {
+        const rows = await fetchData(SHEET_3, '0');
+        let html = '';
+        rows.forEach(r => {
+            html += `
             <div class="card card-custom p-3 border-start border-warning border-4">
-                <h6 class="fw-bold"><i class="bi bi-stars text-warning"></i> ${r.c[1]?.v || ''}</h6>
+                <h6 class="fw-bold mb-1">${r.c[1]?.v || ''}</h6>
                 <p class="small text-muted mb-1">${r.c[2]?.v || ''}</p>
-                <small class="text-primary">โดย: ${r.c[3]?.v || 'Anon'}</small>
-            </div>`).join('');
+                <small class="text-primary fw-bold" style="font-size:10px;">โดย: ${r.c[3]?.v || 'เดฟใจดี'}</small>
+            </div>`;
+        });
+        document.getElementById('list-experience').innerHTML = html || '<p class="text-center mt-5">กำลังโหลดข้อมูล...</p>';
     }
 
     async function loadJobs() {
-        const rows = await pull(ID_4, '0');
-        document.getElementById('list-jobs').innerHTML = rows.map(r => `
+        const rows = await fetchData(SHEET_4, '0');
+        let html = '';
+        rows.forEach(r => {
+            html += `
             <div class="card card-custom p-3 border-start border-success border-4">
                 <h6 class="fw-bold text-primary mb-1">${r.c[3]?.v || ''}</h6>
                 <p class="small text-muted mb-2">${r.c[4]?.v || ''}</p>
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="badge bg-success">฿ ${r.c[5]?.v || '0'}</span>
-                    <a href="${r.c[6]?.v || '#'}" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3">สมัคร</a>
+                    <span class="badge bg-success-subtle text-success border border-success">฿ ${r.c[5]?.v || '0'}</span>
+                    <a href="${r.c[6]?.v || '#'}" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3">สมัครงาน</a>
                 </div>
-            </div>`).join('');
+            </div>`;
+        });
+        document.getElementById('list-jobs').innerHTML = html || '<p class="text-center mt-5">ไม่มีงานใหม่</p>';
     }
 
-    window.onload = loadComm;
+    // เริ่มต้นให้โหลดหน้าแรก
+    window.onload = loadCommunity;
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
--circle
