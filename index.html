@@ -2,94 +2,93 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevHub - Final Corrected</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DevHub - Complete Edition</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; }
-        body { background-color: #f0f2f5; font-family: 'Kanit', sans-serif; padding-bottom: 90px; }
-        .header-box { background: linear-gradient(135deg, #0d6efd, #00429d); color: white; padding: 35px 15px; border-radius: 0 0 30px 30px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .page { display: none; animation: fadeIn 0.3s ease; }
-        .active-page { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 1000; }
-        .nav-link { text-align: center; color: #999; text-decoration: none; font-size: 11px; flex: 1; border: none; background: none; }
-        .nav-link.active { color: var(--primary); font-weight: 600; }
-        .nav-link i { font-size: 24px; display: block; margin-bottom: 2px; }
-        .card-custom { border: none; border-radius: 18px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 15px; background: white; transition: transform 0.2s; border: 1px solid transparent; }
-        .card-custom:active { transform: scale(0.97); }
-        .border-exp { border-left: 5px solid var(--warning) !important; }
-        .border-job { border-left: 5px solid var(--success) !important; }
+        :root { --blue: #0d6efd; --green: #198754; --gold: #ffc107; }
+        body { background-color: #f0f2f5; font-family: sans-serif; padding-bottom: 80px; margin: 0; }
+        
+        /* Header Style */
+        .header-box { color: white; padding: 30px 15px; border-radius: 0 0 25px 25px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .bg-p1 { background: linear-gradient(135deg, #0d6efd, #004fb0); }
+        .bg-p2 { background: linear-gradient(135deg, #6610f2, #4b0db8); }
+        .bg-p3 { background: linear-gradient(135deg, #ffc107, #e0a800); }
+        .bg-p4 { background: linear-gradient(135deg, #198754, #11663f); }
+
+        /* Card & Font Control */
+        .card-custom { background: white; border: none; border-radius: 15px; padding: 16px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 6px solid #ddd; }
+        .t-title { font-size: 18px; font-weight: bold; color: #333; display: block; margin-bottom: 4px; }
+        .t-desc { font-size: 15px; color: #444; line-height: 1.5; text-align: left; display: block; }
+        .t-author { font-size: 13px; font-weight: bold; color: var(--blue); margin-bottom: 8px; display: block; }
+        
+        .img-preview { width: 100%; max-height: 250px; object-fit: cover; border-radius: 10px; margin-top: 10px; border: 1px solid #eee; }
+
+        /* Navigation */
+        .page { display: none; } .active-page { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; border-top: 1px solid #ddd; height: 65px; z-index: 999; }
+        .nav-btn { flex: 1; border: none; background: none; color: #888; font-size: 11px; padding-top: 10px; transition: 0.2s; }
+        .nav-btn.active { color: var(--blue); font-weight: bold; }
+        .nav-btn i { font-size: 22px; display: block; margin-bottom: 2px; }
     </style>
 </head>
 <body>
 
 <div id="p1" class="page active-page">
-    <div class="header-box text-center"><h4 class="fw-bold"><i class="bi bi-chat-quote-fill me-2"></i>สังคมเดฟ</h4></div>
-    <div class="container mb-4 text-center">
-        <button class="btn btn-light w-100 border rounded-pill py-2 text-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#m1">
-            <i class="bi bi-pencil-square me-2"></i>เขียนโพสต์ใหม่
-        </button>
-    </div>
+    <div class="header-box bg-p1"><h4><i class="bi bi-chat-dots me-2"></i>สังคมเดฟ</h4></div>
+    <div class="container mb-3"><button class="btn btn-primary w-100 rounded-pill py-2" data-bs-toggle="modal" data-bs-target="#m1">โพสต์ข้อความใหม่</button></div>
     <div id="l1" class="container"></div>
 </div>
 
 <div id="p2" class="page">
-    <div class="header-box text-center"><h4 class="fw-bold"><i class="bi bi-bar-chart-line-fill me-2"></i>อันดับเว็บไซต์</h4></div>
+    <div class="header-box bg-p2"><h4><i class="bi bi-star me-2"></i>อันดับเว็บไซต์</h4></div>
     <div id="l2" class="container"></div>
 </div>
 
 <div id="p3" class="page">
-    <div class="header-box text-center"><h4 class="fw-bold"><i class="bi bi-lightbulb-fill me-2"></i>ประสบการณ์</h4></div>
-    <div class="container mb-4 text-center">
-        <button class="btn btn-warning text-white w-100 rounded-pill py-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#m3">
-            <i class="bi bi-stars me-2"></i>แชร์ประสบการณ์
-        </button>
-    </div>
+    <div class="header-box bg-p3"><h4><i class="bi bi-journal-text me-2"></i>ประสบการณ์</h4></div>
+    <div class="container mb-3"><button class="btn btn-warning text-white w-100 rounded-pill py-2" data-bs-toggle="modal" data-bs-target="#m3">แชร์ความรู้</button></div>
     <div id="l3" class="container"></div>
 </div>
 
 <div id="p4" class="page">
-    <div class="header-box text-center" style="background: linear-gradient(135deg, #198754, #0a4d2e);"><h4 class="fw-bold"><i class="bi bi-briefcase-fill me-2"></i>จ้างงานด่วน</h4></div>
-    <div class="container mb-4 text-center">
-        <button class="btn btn-success w-100 rounded-pill py-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#m4">
-            <i class="bi bi-plus-circle me-2"></i>ลงประกาศงาน
-        </button>
-    </div>
+    <div class="header-box bg-p4"><h4><i class="bi bi-briefcase me-2"></i>จ้างงานด่วน</h4></div>
+    <div class="container mb-3"><button class="btn btn-success w-100 rounded-pill py-2" data-bs-toggle="modal" data-bs-target="#m4">ประกาศรับสมัครงาน</button></div>
     <div id="l4" class="container"></div>
 </div>
 
 <nav class="bottom-nav">
-    <button class="nav-link active" onclick="showPage('p1', this)"><i class="bi bi-chat-dots-fill"></i>สังคม</button>
-    <button class="nav-link" onclick="showPage('p2', this)"><i class="bi bi-award-fill"></i>อันดับ</button>
-    <button class="nav-link" onclick="showPage('p3', this)"><i class="bi bi-journal-text"></i>ความรู้</button>
-    <button class="nav-link" onclick="showPage('p4', this)"><i class="bi bi-person-workspace"></i>จ้างงาน</button>
+    <button class="nav-btn active" onclick="showP('p1', this)"><i class="bi bi-people"></i>สังคม</button>
+    <button class="nav-btn" onclick="showP('p2', this)"><i class="bi bi-trophy"></i>อันดับ</button>
+    <button class="nav-btn" onclick="showP('p3', this)"><i class="bi bi-lightbulb"></i>ความรู้</button>
+    <button class="nav-btn" onclick="showP('p4', this)"><i class="bi bi-person-badge"></i>จ้างงาน</button>
 </nav>
 
-<div class="modal fade" id="m1" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-body p-0"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGfD3kDVJaCqZmvnTt6jpJMKY2xJrJU2WBuIOIt8WeiGPGww/viewform?embedded=true" width="100%" height="600" frameborder="0"></iframe></div></div></div></div>
-<div class="modal fade" id="m3" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-body p-0"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdIFyA_JmeF20s3VX_qGIW6S1-g9RWHk_BLWCjfENwTeUzIeQ/viewform?embedded=true" width="100%" height="600" frameborder="0"></iframe></div></div></div></div>
-<div class="modal fade" id="m4" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-body p-0"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeXTVXlbeamMIlFuidcG5d86Go40vXZu4fZX9QbbQmJBTmApw/viewform?embedded=true" width="100%" height="600" frameborder="0"></iframe></div></div></div></div>
+<div class="modal fade" id="m1" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGfD3kDVJaCqZmvnTt6jpJMKY2xJrJU2WBuIOIt8WeiGPGww/viewform?embedded=true" width="100%" height="600"></iframe></div></div></div>
+<div class="modal fade" id="m3" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdIFyA_JmeF20s3VX_qGIW6S1-g9RWHk_BLWCjfENwTeUzIeQ/viewform?embedded=true" width="100%" height="600"></iframe></div></div></div>
+<div class="modal fade" id="m4" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeXTVXlbeamMIlFuidcG5d86Go40vXZu4fZX9QbbQmJBTmApw/viewform?embedded=true" width="100%" height="600"></iframe></div></div></div>
 
 <script>
-    // IDs ที่แก้ไขแล้ว 100%
     const IDS = {
-        S1: '15ajcag5w0OlLohaLHt7nY3NT3mkR_jDuc8hV3UKFeVY', // สังคม
-        S2: '1FZfgrRFicbs0XpRZZ0WBBSZ6dfWsPf1_IpYFht2e5KU', // อันดับ (Ranking)
-        S3: '1ocXnPIi2fvjYxkO-GOVBZpm-RBg122_ywP_IJcv3Bi8', // ประสบการณ์ (Exp)
-        S4: '1xnYqk5zr4WInc2BKMfMhbTYd9GTEcgrjsAsMJeh30jg'  // จ้างงาน
+        S1: '15ajcag5w0OlLohaLHt7nY3NT3mkR_jDuc8hV3UKFeVY',
+        S2: '1FZfgrRFicbs0XpRZZ0WBBSZ6dfWsPf1_IpYFht2e5KU',
+        S3: '1ocXnPIi2fvjYxkO-GOVBZpm-RBg122_ywP_IJcv3Bi8',
+        S4: '1xnYqk5zr4WInc2BKMfMhbTYd9GTEcgrjsAsMJeh30jg'
     };
 
-    function showPage(pId, el) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById(pId).classList.add('active-page');
-        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-        el.classList.add('active');
-        if(pId === 'p1') load1();
-        if(pId === 'p2') load2();
-        if(pId === 'p3') load3();
-        if(pId === 'p4') load4();
+    function getV(c) { return c ? (c.f ? c.f : String(c.v || "")) : ""; }
+
+    function fixUrl(url) {
+        if (!url || url.trim() === "") return "#";
+        let l = url.trim();
+        // ถ้าเป็น Google Drive
+        if (l.includes('drive.google.com')) {
+            let id = l.split('id=')[1] || l.split('/d/')[1]?.split('/')[0];
+            return `https://drive.google.com/uc?export=view&id=${id}`;
+        }
+        return l.startsWith('http') ? l : 'https://' + l;
     }
 
     async function pull(id) {
@@ -104,22 +103,24 @@
         const rows = await pull(IDS.S1);
         let h = '';
         rows.forEach(r => {
-            h += `<div class="card card-custom p-3"><div class="d-flex align-items-center mb-2"><div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width:35px;height:35px">${(r.c[2]?.v || 'A').charAt(0)}</div><div class="ms-2 fw-bold text-dark">${r.c[2]?.v || 'Anonymous'}</div></div><p class="small text-secondary mb-0">${r.c[4]?.v || ''}</p></div>`;
+            let img = getV(r.c[3]) ? fixUrl(getV(r.c[3])) : "";
+            h += `<div class="card-custom" style="border-left-color: var(--blue)">
+                <span class="t-author">@${getV(r.c[2])}</span>
+                <span class="t-desc">${getV(r.c[4])}</span>
+                ${img ? `<img src="${img}" class="img-preview" onerror="this.style.display='none'">` : ""}
+            </div>`;
         });
-        document.getElementById('l1').innerHTML = h || '<p class="text-center">กำลังโหลด...</p>';
+        document.getElementById('l1').innerHTML = h;
     }
 
     async function load2() {
         const rows = await pull(IDS.S2);
-        // เรียงคะแนนจากคอลัมน์ E (index 4) มากไปน้อย
-        rows.sort((a, b) => (parseFloat(b.c[4]?.v) || 0) - (parseFloat(a.c[4]?.v) || 0));
+        rows.sort((a,b) => (parseFloat(getV(b.c[4]))||0) - (parseFloat(getV(a.c[4]))||0));
         let h = '';
-        rows.forEach((r, i) => {
-            h += `<div class="card card-custom p-3 d-flex flex-row justify-content-between align-items-center">
-                <div class="d-flex align-items-center"><div class="fw-bold text-primary me-3 fs-5" style="min-width:40px;">#${i+1}</div>
-                <div><h6 class="fw-bold mb-0 text-dark">${r.c[1]?.v || ''}</h6><small class="text-muted">${r.c[2]?.v || ''}</small></div></div>
-                <div class="text-end"><div class="text-warning fw-bold"><i class="bi bi-star-fill"></i> ${r.c[4]?.v || '0.0'}</div>
-                <a href="${r.c[3]?.v}" target="_blank" class="btn btn-sm btn-link p-0 text-decoration-none" style="font-size:11px">ลิ้งก์เว็บ <i class="bi bi-arrow-right"></i></a></div>
+        rows.forEach((r,i) => {
+            h += `<div class="card-custom d-flex justify-content-between align-items-center">
+                <div><span class="t-title">#${i+1} ${getV(r.c[1])}</span><span class="t-desc">${getV(r.c[2])}</span></div>
+                <div class="text-warning fw-bold">★ ${getV(r.c[4])}</div>
             </div>`;
         });
         document.getElementById('l2').innerHTML = h;
@@ -129,7 +130,11 @@
         const rows = await pull(IDS.S3);
         let h = '';
         rows.forEach(r => {
-            h += `<div class="card card-custom p-3 border-exp"><h6 class="fw-bold text-dark mb-1">${r.c[1]?.v || ''}</h6><p class="small text-muted mb-0">${r.c[2]?.v || ''}</p></div>`;
+            h += `<div class="card-custom" style="border-left-color: var(--gold)">
+                <span class="t-title">${getV(r.c[1])}</span>
+                <span class="t-desc">${getV(r.c[2])}</span>
+                <div class="text-end mt-2" style="font-size:12px; color:#999;">โดย: ${getV(r.c[3])}</div>
+            </div>`;
         });
         document.getElementById('l3').innerHTML = h;
     }
@@ -138,14 +143,34 @@
         const rows = await pull(IDS.S4);
         let h = '';
         rows.forEach(r => {
-            h += `<div class="card card-custom p-3 border-job"><div class="d-flex justify-content-between align-items-start mb-2"><h6 class="fw-bold text-success mb-0">${r.c[3]?.v || 'Job'}</h6><span class="badge bg-success">฿ ${r.c[5]?.v || '0'}</span></div>
-                <p class="small text-muted mb-3">${r.c[4]?.v || ''}</p><div class="text-end"><a href="${r.c[6]?.v || '#'}" target="_blank" class="btn btn-sm btn-primary rounded-pill px-4">ดูงาน</a></div></div>`;
+            let contact = getV(r.c[6]);
+            let finalLink = fixUrl(contact);
+            h += `<div class="card-custom" style="border-left-color: var(--green)">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="t-title text-success">${getV(r.c[3])}</span>
+                    <span class="badge bg-success">฿ ${getV(r.c[5])}</span>
+                </div>
+                <span class="t-desc mt-2">${getV(r.c[4])}</span>
+                <div class="text-end mt-3">
+                    <a href="${finalLink}" target="_blank" class="btn btn-success btn-sm rounded-pill px-4 ${contact ? '' : 'disabled'}">
+                        <i class="bi bi-person-lines-fill me-1"></i> ติดต่อผู้จ้าง
+                    </a>
+                </div>
+            </div>`;
         });
         document.getElementById('l4').innerHTML = h;
     }
 
+    function showP(id, btn) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(id).classList.add('active-page');
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if(id==='p1')load1(); if(id==='p2')load2(); if(id==='p3')load3(); if(id==='p4')load4();
+        window.scrollTo(0,0);
+    }
     window.onload = load1;
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+    </html>
