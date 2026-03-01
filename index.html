@@ -24,7 +24,6 @@
 <div id="community" class="page active-page">
     <div class="header-box text-center">
         <h4 class="fw-bold"><i class="bi bi-people-fill me-2"></i> Dev Community</h4>
-        <p class="small mb-0 opacity-75">พื้นที่แบ่งปันและหาเพื่อนร่วมอุดมการณ์</p>
     </div>
     <div class="container mb-3 text-center">
         <button class="btn btn-white w-100 shadow-sm rounded-pill border py-2" data-bs-toggle="modal" data-bs-target="#postModal">
@@ -38,12 +37,9 @@
     <div class="header-box text-center">
         <h4 class="fw-bold"><i class="bi bi-trophy-fill me-2"></i> Ranking</h4>
     </div>
-    <div class="container">
+    <div class="container" id="list-ranking">
         <div class="card card-custom p-3 d-flex flex-row justify-content-between align-items-center">
             <span>1. นายเทพ โค้ดดิ้ง</span><span class="text-primary fw-bold">2,500 แต้ม</span>
-        </div>
-        <div class="card card-custom p-3 d-flex flex-row justify-content-between align-items-center">
-            <span>2. สมหญิง สกิลดี</span><span class="text-primary fw-bold">1,850 แต้ม</span>
         </div>
     </div>
 </div>
@@ -64,6 +60,11 @@
     <div class="header-box text-center">
         <h4 class="fw-bold"><i class="bi bi-briefcase-fill me-2"></i> Job Board</h4>
     </div>
+    <div class="container mb-3 text-center">
+        <button class="btn btn-success text-white w-100 shadow-sm rounded-pill border py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#jobModal">
+            <i class="bi bi-plus-circle me-1"></i> ลงประกาศรับสมัครงาน
+        </button>
+    </div>
     <div id="list-jobs" class="container"></div>
 </div>
 
@@ -82,18 +83,20 @@
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdIFyA_JmeF20s3VX_qGIW6S1-g9RWHk_BLWCjfENwTeUzIeQ/viewform?embedded=true" width="100%" height="550" frameborder="0"></iframe>
 </div></div></div></div>
 
+<div class="modal fade" id="jobModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content" style="border-radius:20px;"><div class="modal-body p-0">
+    <iframe src="ใส่_Link_Google_Form_จ้างงาน_ตรงนี้" width="100%" height="550" frameborder="0"></iframe>
+</div></div></div></div>
+
 <script>
-    // ID ไฟล์ที่ดึงมาจากลิ้งก์ของคุณ
-    const SHEET_1 = '15ajcag5w0OlLohaLHt7nY3NT3mkR_jDuc8hV3UKFeVY'; // สังคม
-    const SHEET_3 = '1ocXnPIi2fvjYxkO-GOVBZpm-RBg122_ywP_IJcv3Bi8'; // ประสบการณ์
-    const SHEET_4 = '1xnYqk5zr4WInc2BKMfMhbTYd9GTEcgrjsAsMJeh30jg'; // จ้างงาน
+    const SHEET_1 = '15ajcag5w0OlLohaLHt7nY3NT3mkR_jDuc8hV3UKFeVY'; 
+    const SHEET_3 = '1ocXnPIi2fvjYxkO-GOVBZpm-RBg122_ywP_IJcv3Bi8'; 
+    const SHEET_4 = '1xnYqk5zr4WInc2BKMfMhbTYd9GTEcgrjsAsMJeh30jg'; 
 
     function showPage(pageId, element) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById(pageId).classList.add('active-page');
         document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
         element.classList.add('active');
-        
         if(pageId === 'community') loadCommunity();
         if(pageId === 'experience') loadExperience();
         if(pageId === 'jobs') loadJobs();
@@ -103,67 +106,46 @@
         try {
             const response = await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&gid=${gid}`);
             const text = await response.text();
-            const json = JSON.parse(text.substring(47).slice(0, -2));
-            return json.table.rows;
-        } catch (e) {
-            console.error('Error fetching data:', e);
-            return [];
-        }
+            return JSON.parse(text.substring(47).slice(0, -2)).table.rows;
+        } catch (e) { return []; }
     }
 
     async function loadCommunity() {
         const rows = await fetchData(SHEET_1, '0');
         let html = '';
         rows.forEach(r => {
-            const name = r.c[2]?.v || 'Anonymous'; // คอลัมน์ C ในรูปชีต
-            const tag = r.c[3]?.v || 'ทั่วไป';      // คอลัมน์ D
-            const msg = r.c[4]?.v || '';           // คอลัมน์ E
-            const link = r.c[5]?.v || '#';          // คอลัมน์ F
-            html += `
-            <div class="card card-custom p-3">
-                <div class="d-flex align-items-center mb-2">
-                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width:35px; height:35px; font-weight:bold;">${name.charAt(0)}</div>
-                    <div class="ms-2"><div class="fw-bold small">${name}</div><span class="badge bg-light text-primary border" style="font-size:10px;">${tag}</span></div>
-                </div>
-                <p class="small mb-2 text-dark">${msg}</p>
-                <div class="text-end"><a href="${link}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">ติดต่อ</a></div>
+            html += `<div class="card card-custom p-3">
+                <div class="fw-bold small text-primary">${r.c[2]?.v || 'Anon'}</div>
+                <p class="small mb-0">${r.c[4]?.v || ''}</p>
             </div>`;
         });
-        document.getElementById('list-community').innerHTML = html || '<p class="text-center mt-5">ไม่มีข้อมูล</p>';
+        document.getElementById('list-community').innerHTML = html;
     }
 
     async function loadExperience() {
         const rows = await fetchData(SHEET_3, '0');
         let html = '';
         rows.forEach(r => {
-            html += `
-            <div class="card card-custom p-3 border-start border-warning border-4">
+            html += `<div class="card card-custom p-3 border-start border-warning border-4">
                 <h6 class="fw-bold mb-1">${r.c[1]?.v || ''}</h6>
-                <p class="small text-muted mb-1">${r.c[2]?.v || ''}</p>
-                <small class="text-primary fw-bold" style="font-size:10px;">โดย: ${r.c[3]?.v || 'เดฟใจดี'}</small>
+                <small class="text-muted">${r.c[2]?.v || ''}</small>
             </div>`;
         });
-        document.getElementById('list-experience').innerHTML = html || '<p class="text-center mt-5">กำลังโหลดข้อมูล...</p>';
+        document.getElementById('list-experience').innerHTML = html;
     }
 
     async function loadJobs() {
         const rows = await fetchData(SHEET_4, '0');
         let html = '';
         rows.forEach(r => {
-            html += `
-            <div class="card card-custom p-3 border-start border-success border-4">
+            html += `<div class="card card-custom p-3 border-start border-success border-4">
                 <h6 class="fw-bold text-primary mb-1">${r.c[3]?.v || ''}</h6>
-                <p class="small text-muted mb-2">${r.c[4]?.v || ''}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="badge bg-success-subtle text-success border border-success">฿ ${r.c[5]?.v || '0'}</span>
-                    <a href="${r.c[6]?.v || '#'}" target="_blank" class="btn btn-sm btn-primary rounded-pill px-3">สมัครงาน</a>
-                </div>
+                <div class="d-flex justify-content-between"><span class="badge bg-success">฿ ${r.c[5]?.v || '0'}</span></div>
             </div>`;
         });
-        document.getElementById('list-jobs').innerHTML = html || '<p class="text-center mt-5">ไม่มีงานใหม่</p>';
+        document.getElementById('list-jobs').innerHTML = html;
     }
 
-    // เริ่มต้นให้โหลดหน้าแรก
     window.onload = loadCommunity;
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
