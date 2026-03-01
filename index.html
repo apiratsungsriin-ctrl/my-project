@@ -3,72 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DevHub - Complete Edition</title>
+    <title>DevHub - Fixed Edition</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        :root { --blue: #0d6efd; --green: #198754; --gold: #ffc107; }
-        body { background-color: #f0f2f5; font-family: sans-serif; padding-bottom: 80px; margin: 0; }
+        :root { --blue: #0d6efd; --green: #198754; --gold: #ffc107; --purple: #6610f2; }
+        body { background-color: #f4f6f9; font-family: sans-serif; padding-bottom: 80px; margin: 0; }
         
-        /* Header Style */
-        .header-box { color: white; padding: 30px 15px; border-radius: 0 0 25px 25px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .bg-p1 { background: linear-gradient(135deg, #0d6efd, #004fb0); }
-        .bg-p2 { background: linear-gradient(135deg, #6610f2, #4b0db8); }
-        .bg-p3 { background: linear-gradient(135deg, #ffc107, #e0a800); }
-        .bg-p4 { background: linear-gradient(135deg, #198754, #11663f); }
+        .header-box { color: white; padding: 25px 15px; border-radius: 0 0 20px 20px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .bg-p1 { background: linear-gradient(135deg, var(--blue), #004fb0); }
+        .bg-p2 { background: linear-gradient(135deg, var(--purple), #4b0db8); }
+        .bg-p3 { background: linear-gradient(135deg, var(--gold), #e0a800); }
+        .bg-p4 { background: linear-gradient(135deg, var(--green), #11663f); }
 
-        /* Card & Font Control */
-        .card-custom { background: white; border: none; border-radius: 15px; padding: 16px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 6px solid #ddd; }
-        .t-title { font-size: 18px; font-weight: bold; color: #333; display: block; margin-bottom: 4px; }
-        .t-desc { font-size: 15px; color: #444; line-height: 1.5; text-align: left; display: block; }
-        .t-author { font-size: 13px; font-weight: bold; color: var(--blue); margin-bottom: 8px; display: block; }
+        .card-custom { background: white; border: none; border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); border-left: 5px solid #ddd; }
+        .t-title { font-size: 17px; font-weight: bold; color: #333; display: block; }
+        .t-desc { font-size: 14px; color: #444; line-height: 1.5; display: block; margin-top: 5px; }
+        .t-author { font-size: 13px; font-weight: bold; color: var(--blue); }
         
-        .img-preview { width: 100%; max-height: 250px; object-fit: cover; border-radius: 10px; margin-top: 10px; border: 1px solid #eee; }
+        .img-preview { width: 100%; max-height: 300px; object-fit: contain; border-radius: 8px; margin-top: 10px; background: #fafafa; border: 1px solid #eee; }
 
-        /* Navigation */
-        .page { display: none; } .active-page { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .page { display: none; } .active-page { display: block; animation: fadeIn 0.2s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; border-top: 1px solid #ddd; height: 65px; z-index: 999; }
-        .nav-btn { flex: 1; border: none; background: none; color: #888; font-size: 11px; padding-top: 10px; transition: 0.2s; }
+        .nav-btn { flex: 1; border: none; background: none; color: #888; font-size: 11px; padding-top: 8px; }
         .nav-btn.active { color: var(--blue); font-weight: bold; }
-        .nav-btn i { font-size: 22px; display: block; margin-bottom: 2px; }
+        .nav-btn i { font-size: 20px; display: block; margin-bottom: 2px; }
     </style>
 </head>
 <body>
 
 <div id="p1" class="page active-page">
-    <div class="header-box bg-p1"><h4><i class="bi bi-chat-dots me-2"></i>สังคมเดฟ</h4></div>
-    <div class="container mb-3"><button class="btn btn-primary w-100 rounded-pill py-2" data-bs-toggle="modal" data-bs-target="#m1">โพสต์ข้อความใหม่</button></div>
+    <div class="header-box bg-p1"><h4><i class="bi bi-chat-heart"></i> สังคมเดฟ</h4></div>
+    <div class="container mb-3"><button class="btn btn-primary w-100 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#m1">โพสต์ใหม่</button></div>
     <div id="l1" class="container"></div>
 </div>
 
 <div id="p2" class="page">
-    <div class="header-box bg-p2"><h4><i class="bi bi-star me-2"></i>อันดับเว็บไซต์</h4></div>
+    <div class="header-box bg-p2"><h4><i class="bi bi-trophy"></i> อันดับเว็บไซต์</h4></div>
     <div id="l2" class="container"></div>
 </div>
 
 <div id="p3" class="page">
-    <div class="header-box bg-p3"><h4><i class="bi bi-journal-text me-2"></i>ประสบการณ์</h4></div>
-    <div class="container mb-3"><button class="btn btn-warning text-white w-100 rounded-pill py-2" data-bs-toggle="modal" data-bs-target="#m3">แชร์ความรู้</button></div>
+    <div class="header-box bg-p3"><h4><i class="bi bi-lightbulb"></i> ประสบการณ์</h4></div>
+    <div class="container mb-3"><button class="btn btn-warning text-white w-100 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#m3">แชร์ความรู้</button></div>
     <div id="l3" class="container"></div>
 </div>
 
 <div id="p4" class="page">
-    <div class="header-box bg-p4"><h4><i class="bi bi-briefcase me-2"></i>จ้างงานด่วน</h4></div>
-    <div class="container mb-3"><button class="btn btn-success w-100 rounded-pill py-2" data-bs-toggle="modal" data-bs-target="#m4">ประกาศรับสมัครงาน</button></div>
+    <div class="header-box bg-p4"><h4><i class="bi bi-briefcase"></i> จ้างงานด่วน</h4></div>
+    <div class="container mb-3"><button class="btn btn-success w-100 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#m4">ลงประกาศงาน</button></div>
     <div id="l4" class="container"></div>
 </div>
 
 <nav class="bottom-nav">
-    <button class="nav-btn active" onclick="showP('p1', this)"><i class="bi bi-people"></i>สังคม</button>
-    <button class="nav-btn" onclick="showP('p2', this)"><i class="bi bi-trophy"></i>อันดับ</button>
-    <button class="nav-btn" onclick="showP('p3', this)"><i class="bi bi-lightbulb"></i>ความรู้</button>
-    <button class="nav-btn" onclick="showP('p4', this)"><i class="bi bi-person-badge"></i>จ้างงาน</button>
+    <button class="nav-btn active" onclick="showP('p1', this)"><i class="bi bi-people-fill"></i>สังคม</button>
+    <button class="nav-btn" onclick="showP('p2', this)"><i class="bi bi-bar-chart-fill"></i>อันดับ</button>
+    <button class="nav-btn" onclick="showP('p3', this)"><i class="bi bi-book-fill"></i>ความรู้</button>
+    <button class="nav-btn" onclick="showP('p4', this)"><i class="bi bi-chat-right-quote-fill"></i>จ้างงาน</button>
 </nav>
 
-<div class="modal fade" id="m1" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGfD3kDVJaCqZmvnTt6jpJMKY2xJrJU2WBuIOIt8WeiGPGww/viewform?embedded=true" width="100%" height="600"></iframe></div></div></div>
-<div class="modal fade" id="m3" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdIFyA_JmeF20s3VX_qGIW6S1-g9RWHk_BLWCjfENwTeUzIeQ/viewform?embedded=true" width="100%" height="600"></iframe></div></div></div>
-<div class="modal fade" id="m4" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeXTVXlbeamMIlFuidcG5d86Go40vXZu4fZX9QbbQmJBTmApw/viewform?embedded=true" width="100%" height="600"></iframe></div></div></div>
+<div class="modal fade" id="m1" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGfD3kDVJaCqZmvnTt6jpJMKY2xJrJU2WBuIOIt8WeiGPGww/viewform?embedded=true" width="100%" height="600" frameborder="0"></iframe></div></div></div>
+<div class="modal fade" id="m3" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdIFyA_JmeF20s3VX_qGIW6S1-g9RWHk_BLWCjfENwTeUzIeQ/viewform?embedded=true" width="100%" height="600" frameborder="0"></iframe></div></div></div>
+<div class="modal fade" id="m4" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeXTVXlbeamMIlFuidcG5d86Go40vXZu4fZX9QbbQmJBTmApw/viewform?embedded=true" width="100%" height="600" frameborder="0"></iframe></div></div></div>
 
 <script>
     const IDS = {
@@ -81,9 +79,8 @@
     function getV(c) { return c ? (c.f ? c.f : String(c.v || "")) : ""; }
 
     function fixUrl(url) {
-        if (!url || url.trim() === "") return "#";
+        if (!url || url.trim() === "") return "";
         let l = url.trim();
-        // ถ้าเป็น Google Drive
         if (l.includes('drive.google.com')) {
             let id = l.split('id=')[1] || l.split('/d/')[1]?.split('/')[0];
             return `https://drive.google.com/uc?export=view&id=${id}`;
@@ -99,18 +96,26 @@
         } catch (e) { return []; }
     }
 
+    // แก้ไขตามรูป Sheet ระบบ 1
     async function load1() {
         const rows = await pull(IDS.S1);
         let h = '';
         rows.forEach(r => {
-            let img = getV(r.c[3]) ? fixUrl(getV(r.c[3])) : "";
+            let name = getV(r.c[2]);    // คอลัมน์ C
+            let type = getV(r.c[3]);    // คอลัมน์ D
+            let content = getV(r.c[4]); // คอลัมน์ E
+            let img = fixUrl(getV(r.c[5])); // คอลัมน์ F
+            
             h += `<div class="card-custom" style="border-left-color: var(--blue)">
-                <span class="t-author">@${getV(r.c[2])}</span>
-                <span class="t-desc">${getV(r.c[4])}</span>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="t-author">@${name}</span>
+                    <span class="badge bg-light text-primary" style="font-size:10px">${type}</span>
+                </div>
+                <span class="t-desc">${content}</span>
                 ${img ? `<img src="${img}" class="img-preview" onerror="this.style.display='none'">` : ""}
             </div>`;
         });
-        document.getElementById('l1').innerHTML = h;
+        document.getElementById('l1').innerHTML = h || '<p class="text-center mt-5 text-muted">ไม่มีโพสต์</p>';
     }
 
     async function load2() {
@@ -119,7 +124,7 @@
         let h = '';
         rows.forEach((r,i) => {
             h += `<div class="card-custom d-flex justify-content-between align-items-center">
-                <div><span class="t-title">#${i+1} ${getV(r.c[1])}</span><span class="t-desc">${getV(r.c[2])}</span></div>
+                <div><span class="t-title">#${i+1} ${getV(r.c[1])}</span><span class="t-desc text-muted">${getV(r.c[2])}</span></div>
                 <div class="text-warning fw-bold">★ ${getV(r.c[4])}</div>
             </div>`;
         });
@@ -133,7 +138,7 @@
             h += `<div class="card-custom" style="border-left-color: var(--gold)">
                 <span class="t-title">${getV(r.c[1])}</span>
                 <span class="t-desc">${getV(r.c[2])}</span>
-                <div class="text-end mt-2" style="font-size:12px; color:#999;">โดย: ${getV(r.c[3])}</div>
+                <div class="text-end mt-2" style="font-size:11px; color:#aaa;">โดย: ${getV(r.c[3])}</div>
             </div>`;
         });
         document.getElementById('l3').innerHTML = h;
@@ -143,17 +148,17 @@
         const rows = await pull(IDS.S4);
         let h = '';
         rows.forEach(r => {
-            let contact = getV(r.c[6]);
-            let finalLink = fixUrl(contact);
+            let contact = getV(r.c[6]); // คอลัมน์ G (ลิงก์ติดต่อ)
+            let finalUrl = fixUrl(contact);
             h += `<div class="card-custom" style="border-left-color: var(--green)">
-                <div class="d-flex justify-content-between align-items-start">
+                <div class="d-flex justify-content-between">
                     <span class="t-title text-success">${getV(r.c[3])}</span>
                     <span class="badge bg-success">฿ ${getV(r.c[5])}</span>
                 </div>
                 <span class="t-desc mt-2">${getV(r.c[4])}</span>
                 <div class="text-end mt-3">
-                    <a href="${finalLink}" target="_blank" class="btn btn-success btn-sm rounded-pill px-4 ${contact ? '' : 'disabled'}">
-                        <i class="bi bi-person-lines-fill me-1"></i> ติดต่อผู้จ้าง
+                    <a href="${finalUrl}" target="_blank" class="btn btn-success btn-sm rounded-pill px-4 ${contact ? '' : 'disabled'}">
+                        <i class="bi bi-chat-dots-fill me-1"></i> ติดต่อผู้จ้าง
                     </a>
                 </div>
             </div>`;
@@ -173,4 +178,4 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-    </html>
+</html
